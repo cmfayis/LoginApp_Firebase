@@ -1,11 +1,10 @@
 
 import 'package:firebase_app/controller/db.dart';
+import 'package:firebase_app/controller/location.dart';
 import 'package:firebase_app/view/widgets/sizedbox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import 'widgets/custom_textfield.dart';
 
 class AddUser extends StatefulWidget {
@@ -28,6 +27,8 @@ class _AddUserState extends State<AddUser> {
 
   @override
   Widget build(BuildContext context) {
+   final location= Provider.of<LocationProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -122,6 +123,8 @@ class _AddUserState extends State<AddUser> {
                               icons: Icon(Icons.person),
                             ),
                             Sizedbox(height: 15.0),
+                             Text(location.currentAddress),
+                             
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
@@ -129,8 +132,7 @@ class _AddUserState extends State<AddUser> {
                                   primary: Colors.white,
                                 ),
                                 onPressed: () {
-                                  // Provider.of<picimage>(context, listen: false)
-                                  //     .getimage(ImageSource.camera);
+                                 Provider.of<LocationProvider>(context,listen: false).getLocation();
                                 },
                                 child: Text("Add Image"),
                               ),
@@ -149,14 +151,16 @@ class _AddUserState extends State<AddUser> {
                                     final email = emailController.text;
                                     final phone = phoneController.text;
                                     final course = courseController.text;
-                                    Provider.of<StudentData>(context,listen: false).addData(name, age, email, phone, course);
+                                    Provider.of<StudentData>(context,listen: false).addData(name, age, email, phone, course,location.currentAddress);
                                     nameController.clear();
                                     ageController.clear();
                                     emailController.clear();
                                     phoneController.clear();
                                     courseController.clear();
+
                                   }
                                    Navigator.pop(context);
+                                   location.clearCurrentAddress();
                                 },
                                 child: Text('Submit'),
                               ),
@@ -176,3 +180,7 @@ class _AddUserState extends State<AddUser> {
     );
   }
 }
+
+
+
+

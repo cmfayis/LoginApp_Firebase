@@ -1,4 +1,5 @@
 import 'package:firebase_app/controller/db.dart';
+import 'package:firebase_app/controller/location.dart';
 import 'package:firebase_app/firebase_options.dart';
 import 'package:firebase_app/view/HomePage.dart';
 import 'package:firebase_app/view/update.dart';
@@ -20,15 +21,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create:(context) => StudentData(),
+    return MultiProvider(
+      providers: [
+ChangeNotifierProvider(create: (context) => StudentData()),
+ChangeNotifierProvider(create: (context) => LocationProvider()),
+      ],
+     
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.fallback(),
         home: HomePage(
           
         ),
-        routes: {
+      routes: {
     '/update': (context) => update(),
   },
       ),

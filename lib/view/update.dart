@@ -1,14 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:firebase_app/controller/db.dart';
-import 'package:firebase_app/view/widgets/sizedbox.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:firebase_app/view/widgets/sizedbox.dart';
 import 'widgets/custom_textfield.dart';
 
 class update extends StatefulWidget {
-  update({Key? key}) : super(key: key);
+
+
+  update({
+    Key? key,
+  
+  }) : super(key: key);
 
   @override
   State<update> createState() => _updateState();
@@ -21,12 +25,39 @@ class _updateState extends State<update> {
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final courseController = TextEditingController();
+   late String location;
   final _key = GlobalKey<FormState>();
-
+   final CollectionReference userdata =
+      FirebaseFirestore.instance.collection('notes');
+  void upDatedata(studentId) {
+    final DATA = {
+      'Name': nameController.text,
+      'Age': ageController.text,
+      'Email':emailController.text,
+      'Phone':phoneController.text,
+      'course':courseController.text,
+      'location':location,
+    };
+    userdata.doc(studentId).update(DATA).then((value) =>Navigator.pop(context) ,);
+  }
+  
   User? currentUser = FirebaseAuth.instance.currentUser;
+@override
 
   @override
   Widget build(BuildContext context) {
+   
+     final args = ModalRoute.of(context)!.settings.arguments as Map;
+    nameController.text = args['Name'];
+    ageController.text = args['Age'];
+    emailController.text=args['Email'];
+    phoneController.text=args['Phone'];
+    courseController.text=args['course'];
+    location=args['location'];
+
+
+    final studentId = args['id'];
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -49,17 +80,17 @@ class _updateState extends State<update> {
                 padding: const EdgeInsets.all(17.0),
                 child: Column(
                   children: [
-                    Text(
+                  const  Text(
                       'Add Student',
                      style: TextStyle(fontSize: 35),
                     ),
-                    SizedBox(
+                const    SizedBox(
                       height: 30,
                     ),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
-                        gradient: LinearGradient(
+                        gradient:const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
@@ -80,47 +111,48 @@ class _updateState extends State<update> {
                             //           File(Provider.of<picimage>(context).selectedimagepath),
                             //         ),
                             //       ),
-                            Sizedbox(height: 15.0),
+                       const     Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: nameController,
                               labelText: 'First Name',
                               hintText: 'First Name',
                               validator: nameValidate,
-                              icons: Icon(Icons.person),
+                              icons:const Icon(Icons.person),
                             ),
-                            Sizedbox(height: 15.0),
+                       const     Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: ageController,
                               labelText: 'Age',
                               hintText: 'Age',
                               validator: ageValidate,
-                              icons: Icon(Icons.person),
+                              icons:const Icon(Icons.person),
                             ),
-                            Sizedbox(height: 15.0),
+                    const        Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: emailController,
                               labelText: 'Email',
                               hintText: 'Email',
                               validator: emailValidate,
-                              icons: Icon(Icons.email),
+                              icons:const Icon(Icons.email),
                             ),
-                            Sizedbox(height: 15.0),
+                       const     Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: phoneController,
                               labelText: 'Phone',
                               hintText: 'Phone',
                               validator: phoneValidate,
-                              icons: Icon(Icons.phone),
+                              icons:const Icon(Icons.phone),
                             ),
-                            Sizedbox(height: 15.0),
+                       const     Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: courseController,
                               labelText: 'Course',
                               hintText: 'Course',
                               validator: nameValidate,
-                              icons: Icon(Icons.person),
+                              icons:const Icon(Icons.person),
                             ),
-                            Sizedbox(height: 15.0),
+                       const     Sizedbox(height: 15.0),
+                       Text(location),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
@@ -131,10 +163,10 @@ class _updateState extends State<update> {
                                   // Provider.of<picimage>(context, listen: false)
                                   //     .getimage(ImageSource.camera);
                                 },
-                                child: Text("Add Image"),
+                                child:const Text("Add Image"),
                               ),
                             ),
-                            Sizedbox(height: 15.0),
+                         const   Sizedbox(height: 15.0),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
@@ -143,12 +175,12 @@ class _updateState extends State<update> {
                                 ),
                                 onPressed: () {
                                   if (_key.currentState!.validate()) {
-                                    final name = nameController.text;
-                                    final age = ageController.text;
-                                    final email = emailController.text;
-                                    final phone = phoneController.text;
-                                    final course = courseController.text;
-                                    Provider.of<StudentData>(context,listen: false).addData(name, age, email, phone, course);
+                                    // final name = nameController.text;
+                                    // final age = ageController.text;
+                                    // final email = emailController.text;
+                                    // final phone = phoneController.text;
+                                    // final course = courseController.text;
+                                    upDatedata(studentId);
                                     nameController.clear();
                                     ageController.clear();
                                     emailController.clear();
@@ -157,10 +189,10 @@ class _updateState extends State<update> {
                                   }
                                    Navigator.pop(context);
                                 },
-                                child: Text('Submit'),
+                                child:const Text('Submit'),
                               ),
                             ),
-                            Sizedbox(height: 45.0),
+                       const     Sizedbox(height: 45.0),
                           ],
                         ),
                       ),
