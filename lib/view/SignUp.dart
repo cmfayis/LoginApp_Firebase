@@ -84,7 +84,7 @@ class signup_page extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const List_page()),
+                                  builder: (context) => const ListPage()),
                             );
 
                             print(

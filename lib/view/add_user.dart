@@ -161,6 +161,7 @@ class _AddUserState extends State<AddUser> {
                                   }
                                    Navigator.pop(context);
                                    location.clearCurrentAddress();
+                                   Provider.of<StudentData>(context ,listen: false).getData();
                                 },
                                 child: Text('Submit'),
                               ),

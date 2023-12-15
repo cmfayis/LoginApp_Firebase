@@ -85,7 +85,7 @@ class login_page extends StatelessWidget {
                             email: emailcontroller.text,
                             password: passwordcontroller.text,
                           );
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) {
                               LocalNotification.showSimpleNotification(
@@ -93,7 +93,7 @@ class login_page extends StatelessWidget {
                                   body: "you are login is sucsessfull",
                                   payload: "This is a simple data");
                                   
-                              return List_page();
+                              return ListPage();
                             }),
                           );
         
