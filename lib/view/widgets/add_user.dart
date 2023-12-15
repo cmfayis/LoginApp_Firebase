@@ -1,49 +1,39 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:firebase_app/controller/db.dart';
+import 'package:firebase_app/controller/location.dart';
+import 'package:firebase_app/view/widgets/sizedbox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_app/view/widgets/sizedbox.dart';
 import 'package:provider/provider.dart';
-import 'widgets/custom_textfield.dart';
 
-class update extends StatefulWidget {
-  update({
-    Key? key,
-  }) : super(key: key);
+import 'custom_textfield.dart';
+
+class AddUser extends StatefulWidget {
+  AddUser({Key? key}) : super(key: key);
 
   @override
-  State<update> createState() => _updateState();
+  State<AddUser> createState() => _AddUserState();
 }
 
-class _updateState extends State<update> {
+class _AddUserState extends State<AddUser> {
   final rollnumberController = TextEditingController();
   final nameController = TextEditingController();
   final ageController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final courseController = TextEditingController();
-  late String location;
   final _key = GlobalKey<FormState>();
 
   User? currentUser = FirebaseAuth.instance.currentUser;
-  @override
+
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map;
-    nameController.text = args['Name'];
-    ageController.text = args['Age'];
-    emailController.text = args['Email'];
-    phoneController.text = args['Phone'];
-    courseController.text = args['course'];
-    location = args['location'];
-    final studentId = args['id'];
+    final location = Provider.of<LocationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        backgroundColor: Color.fromARGB(255, 146, 227, 168),
+        backgroundColor:const Color.fromARGB(255, 146, 227, 168),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -84,48 +74,48 @@ class _updateState extends State<update> {
                         padding: const EdgeInsets.all(17.0),
                         child: Column(
                           children: [
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: nameController,
                               labelText: 'First Name',
                               hintText: 'First Name',
                               validator: nameValidate,
-                              icons: const Icon(Icons.person),
+                              icons: Icon(Icons.person),
                             ),
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: ageController,
                               labelText: 'Age',
                               hintText: 'Age',
                               validator: ageValidate,
-                              icons: const Icon(Icons.person),
+                              icons: Icon(Icons.person),
                             ),
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: emailController,
                               labelText: 'Email',
                               hintText: 'Email',
                               validator: emailValidate,
-                              icons: const Icon(Icons.email),
+                              icons: Icon(Icons.email),
                             ),
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: phoneController,
                               labelText: 'Phone',
                               hintText: 'Phone',
                               validator: phoneValidate,
-                              icons: const Icon(Icons.phone),
+                              icons: Icon(Icons.phone),
                             ),
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: courseController,
                               labelText: 'Course',
                               hintText: 'Course',
                               validator: nameValidate,
-                              icons: const Icon(Icons.person),
+                              icons: Icon(Icons.person),
                             ),
-                            const Sizedbox(height: 15.0),
-                            Text(location),
+                            Sizedbox(height: 15.0),
+                            Text(location.currentAddress),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
@@ -133,12 +123,14 @@ class _updateState extends State<update> {
                                   primary: Colors.white,
                                 ),
                                 onPressed: () {
-                                 ;
+                                  Provider.of<LocationProvider>(context,
+                                          listen: false)
+                                      .getLocation();
                                 },
-                                child: const Text("Add Image"),
+                                child: Text("Add Image"),
                               ),
                             ),
-                            const Sizedbox(height: 15.0),
+                            Sizedbox(height: 15.0),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
@@ -147,22 +139,28 @@ class _updateState extends State<update> {
                                 ),
                                 onPressed: () {
                                   if (_key.currentState!.validate()) {
-                                    Provider.of<StudentData>(context,listen: false)
-                                        .upDatedata(
-                                            studentId,
-                                            nameController,
-                                            emailController,
-                                            ageController,
-                                            phoneController,
-                                            courseController,
-                                            location);
+                                    final name = nameController.text;
+                                    final age = ageController.text;
+                                    final email = emailController.text;
+                                    final phone = phoneController.text;
+                                    final course = courseController.text;
+                                    Provider.of<StudentData>(context,
+                                            listen: false)
+                                        .addData(name, age, email, phone,
+                                            course, location.currentAddress);
+                                    nameController.clear();
+                                    ageController.clear();
+                                    emailController.clear();
+                                    phoneController.clear();
+                                    courseController.clear();
                                   }
                                   Navigator.pop(context);
+                                  location.clearCurrentAddress();
                                 },
-                                child: const Text('Submit'),
+                                child: Text('Submit'),
                               ),
                             ),
-                            const Sizedbox(height: 45.0),
+                            Sizedbox(height: 45.0),
                           ],
                         ),
                       ),

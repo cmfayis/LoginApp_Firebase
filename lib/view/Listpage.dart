@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app/controller/db.dart';
 import 'package:firebase_app/view/add_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 class List_page extends StatefulWidget {
@@ -15,10 +17,6 @@ class _List_pageState extends State<List_page> {
   @override
   Widget build(BuildContext context) {
     User? userId = FirebaseAuth.instance.currentUser;
-    final students = FirebaseFirestore.instance.collection('notes');
-     void delete(docid){
-    students.doc(docid).delete();
-  }
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 146, 227, 168),
@@ -88,11 +86,10 @@ class _List_pageState extends State<List_page> {
                                 },
                                 trailing: IconButton(
                                   onPressed: () {
-                                 delete(studentData.id);
+                                 Provider.of<StudentData>(context).delete(studentData.id);
                                   },
                                   icon: Icon(Icons.delete),
                                 ),
-                                // leading: CircleAvatar(),
                                 title: Text(
                                   studentData['Name'],
                                 ),
