@@ -134,7 +134,7 @@ class _AddUserState extends State<AddUser> {
                                 onPressed: () {
                                  Provider.of<LocationProvider>(context,listen: false).getLocation();
                                 },
-                                child: Text("Add Image"),
+                                child: Text("Add Location"),
                               ),
                             ),
                             Sizedbox(height: 15.0),

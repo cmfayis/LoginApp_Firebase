@@ -135,7 +135,7 @@ class _updateState extends State<update> {
                                 onPressed: () {
                                  ;
                                 },
-                                child: const Text("Add Image"),
+                                child: const Text("Add Location"),
                               ),
                             ),
                             const Sizedbox(height: 15.0),

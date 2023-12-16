@@ -31,47 +31,47 @@ class signup_page extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-            const        Sizedbox(height: 15.0),
+                    const Sizedbox(height: 15.0),
                     Container(
                         height: 250,
                         width: 329,
                         child: Image.asset("assets/images/login.png")),
-              const Text(
+                    const Text(
                       'Create Acoount',
                       style: TextStyle(
                           fontSize: 37.0,
                           color: Color.fromARGB(255, 146, 227, 168),
                           fontWeight: FontWeight.w900),
                     ),
-               const     SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                     textfield(
                       controller: namecontroller,
                       name: 'Name',
-                      color:const Color.fromARGB(255, 216, 224, 231),
+                      color: const Color.fromARGB(255, 216, 224, 231),
                     ),
-                  const  Sizedbox(height: 5.0),
+                    const Sizedbox(height: 5.0),
                     textfield(
                       controller: emailcontroller,
                       name: 'Email',
-                      color:const Color.fromARGB(255, 216, 224, 231),
+                      color: const Color.fromARGB(255, 216, 224, 231),
                     ),
-              const    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     textfield(
                       controller: passwordcontroller,
                       name: 'Password',
-                      color:const Color.fromARGB(255, 216, 224, 231),
+                      color: const Color.fromARGB(255, 216, 224, 231),
                     ),
-             const       SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     MyElevatedButton(
                         width: 160,
                         colors: Colors.white,
-                        color:const Color.fromARGB(255, 146, 227, 168),
+                        color: const Color.fromARGB(255, 146, 227, 168),
                         buttonText: 'Sign Up',
                         onPressed: () async {
                           try {
@@ -80,12 +80,12 @@ class signup_page extends StatelessWidget {
                               email: emailcontroller.text,
                               password: passwordcontroller.text,
                             );
-                            
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ListPage()),
-                            );
+
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ListPage()),
+                                (routes) => false);
 
                             print(
                                 'User created: ${userCredential.user!.email}');
@@ -95,9 +95,15 @@ class signup_page extends StatelessWidget {
                         }),
                     TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const login_page()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const login_page()));
                         },
-                        child:const Text('Already have an account',style: TextStyle(color: Colors.blue),)),
+                        child: const Text(
+                          'Already have an account',
+                          style: TextStyle(color: Colors.blue),
+                        )),
                   ],
                 ),
               ),

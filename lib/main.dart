@@ -2,20 +2,23 @@ import 'package:firebase_app/controller/db.dart';
 import 'package:firebase_app/controller/location.dart';
 import 'package:firebase_app/firebase_options.dart';
 import 'package:firebase_app/view/HomePage.dart';
+import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/update.dart';
 import 'package:firebase_app/view/widgets/notification.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main()async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-);
-await LocalNotification.init();
+  );
+  await LocalNotification.init();
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -23,19 +26,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-ChangeNotifierProvider(create: (context) => StudentData()),
-ChangeNotifierProvider(create: (context) => LocationProvider()),
+        ChangeNotifierProvider(create: (context) => StudentData()),
+        ChangeNotifierProvider(create: (context) => LocationProvider()),
       ],
-     
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData.fallback(),
-        home: HomePage(
-          
-        ),
-      routes: {
-    '/update': (context) => update(),
-  },
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListPage();
+              } else {
+                return HomePage();
+              }
+            }),
+        routes: {
+          '/update': (context) => update(),
+        },
       ),
     );
   }

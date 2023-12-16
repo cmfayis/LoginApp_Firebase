@@ -13,11 +13,6 @@ class StudentData extends ChangeNotifier {
        return data;
   }
 
- 
-        
-
-  
-
   void addData(String name, String age, String email, String phone,
       String course, String location) async {
     User? currentUser = FirebaseAuth.instance.currentUser;

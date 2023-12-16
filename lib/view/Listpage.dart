@@ -1,4 +1,6 @@
 import 'package:firebase_app/controller/db.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,8 +15,10 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+
   @override
   Widget build(BuildContext context) {
+   final Data= Provider.of<StudentData>(context).getData();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 146, 227, 168),
@@ -27,6 +31,11 @@ class _ListPageState extends State<ListPage> {
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: ()async{
+await FirebaseAuth.instance.signOut();
+          }, icon: Icon(Icons.logout)),
+        ],
         backgroundColor: const Color.fromARGB(255, 146, 227, 168),
         title: const Text(
           "Student Data",
@@ -54,7 +63,7 @@ class _ListPageState extends State<ListPage> {
                       return Text('Error occurred');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -93,7 +102,8 @@ class _ListPageState extends State<ListPage> {
                               },
                               trailing: IconButton(
                                 onPressed: () {
-                                  Provider.of<StudentData>(context)
+                                  Provider.of<StudentData>(context,
+                                          listen: false)
                                       .delete(studentData.id);
                                 },
                                 icon: Icon(Icons.delete),
