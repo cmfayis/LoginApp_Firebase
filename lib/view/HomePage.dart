@@ -14,18 +14,18 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
+          const   SizedBox(
               height: 110,
             ),
             Container(
               width: 300,
               height: 300,
-              decoration: BoxDecoration(
+              decoration:const  BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage(
                           "assets/images/Exams-bro-removebg-preview (1).png"))),
             ),
-            SizedBox(
+         const    SizedBox(
               height: 50,
             ),
             Text(
@@ -33,12 +33,12 @@ class HomePage extends StatelessWidget {
               style: GoogleFonts.raleway(
                   fontSize: 50, fontWeight: FontWeight.w700),
             ),
-            Text(
+          const  Text(
               '...',
               style: TextStyle(
                   fontSize: 105, color: Color.fromARGB(255,146,227,168)),
             ),
-            SizedBox(
+         const   SizedBox(
               height: 70,
             ),
             Row(
@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => login_page()));
                     }),
-                SizedBox(
+               const  SizedBox(
                   width: 30,
                 ),
                 MyElevatedButton(

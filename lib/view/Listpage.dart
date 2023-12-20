@@ -1,6 +1,6 @@
 import 'package:firebase_app/controller/db.dart';
+import 'package:firebase_app/view/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,10 +15,8 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-
   @override
   Widget build(BuildContext context) {
-   final Data= Provider.of<StudentData>(context).getData();
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 146, 227, 168),
@@ -32,9 +30,13 @@ class _ListPageState extends State<ListPage> {
       ),
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: ()async{
-await FirebaseAuth.instance.signOut();
-          }, icon: Icon(Icons.logout)),
+          IconButton(
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut().then((value) =>
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage())));
+              },
+              icon: Icon(Icons.logout)),
         ],
         backgroundColor: const Color.fromARGB(255, 146, 227, 168),
         title: const Text(

@@ -126,18 +126,7 @@ class _updateState extends State<update> {
                             ),
                             const Sizedbox(height: 15.0),
                             Text(location),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                ),
-                                onPressed: () {
-                                 ;
-                                },
-                                child: const Text("Add Location"),
-                              ),
-                            ),
+                
                             const Sizedbox(height: 15.0),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
@@ -159,7 +148,7 @@ class _updateState extends State<update> {
                                   }
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Submit'),
+                                child: const Text('Update'),
                               ),
                             ),
                             const Sizedbox(height: 45.0),

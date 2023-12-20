@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class StudentData extends ChangeNotifier {
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> getData(){
+  getData(){
    User? userId = FirebaseAuth.instance.currentUser;
- Stream<QuerySnapshot<Map<String, dynamic>>> data=   FirebaseFirestore.instance
+ final data=   FirebaseFirestore.instance
         .collection("notes")
         .where("userId", isEqualTo: userId?.uid)
         .snapshots();
