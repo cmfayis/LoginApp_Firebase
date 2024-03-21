@@ -1,4 +1,3 @@
-
 import 'package:firebase_app/controller/db.dart';
 import 'package:firebase_app/controller/location.dart';
 import 'package:firebase_app/view/widgets/sizedbox.dart';
@@ -27,20 +26,21 @@ class _AddUserState extends State<AddUser> {
 
   @override
   Widget build(BuildContext context) {
-   final location= Provider.of<LocationProvider>(context);
+    final location = Provider.of<LocationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
-        backgroundColor: Color.fromARGB(255,146,227,168),
+        toolbarHeight: 50,
+        backgroundColor: Color.fromARGB(255, 47, 245, 235),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromARGB(255,146,227,168), Colors.white],
+            colors: [Color.fromARGB(255, 47, 245, 235), Colors.white],
           ),
         ),
         child: SafeArea(
@@ -48,40 +48,24 @@ class _AddUserState extends State<AddUser> {
             child: Form(
               key: _key,
               child: Padding(
-                padding: const EdgeInsets.all(17.0),
+                padding: const EdgeInsets.symmetric(horizontal: 17),
                 child: Column(
                   children: [
                     Text(
                       'Add Student',
-                     style: TextStyle(fontSize: 35),
+                      style: TextStyle(fontSize: 35),
                     ),
                     SizedBox(
                       height: 30,
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.white,
-                            Color.fromARGB(255,146,227,168)
-                          ],
-                        ),
-                      ),
+                          borderRadius: BorderRadius.circular(20.0),
+                          color: Colors.white),
                       child: Padding(
                         padding: const EdgeInsets.all(17.0),
                         child: Column(
                           children: [
-                            // Provider.of<picimage>(context).selectedimagepath.isEmpty
-                            //     ? Text('Select Image')
-                            //     : CircleAvatar(
-                            //         radius: 50.0,
-                            //         backgroundImage: FileImage(
-                            //           File(Provider.of<picimage>(context).selectedimagepath),
-                            //         ),
-                            //       ),
                             Sizedbox(height: 15.0),
                             CustomTextFormField(
                               controller: nameController,
@@ -123,16 +107,18 @@ class _AddUserState extends State<AddUser> {
                               icons: Icon(Icons.person),
                             ),
                             Sizedbox(height: 15.0),
-                             Text(location.currentAddress),
-                             
+                            Text(location.currentAddress),
                             SizedBox(
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 47, 245, 235),
                                 ),
                                 onPressed: () {
-                                 Provider.of<LocationProvider>(context,listen: false).getLocation();
+                                  Provider.of<LocationProvider>(context,
+                                          listen: false)
+                                      .getLocation();
                                 },
                                 child: Text("Add Location"),
                               ),
@@ -142,7 +128,8 @@ class _AddUserState extends State<AddUser> {
                               width: MediaQuery.of(context).size.width,
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 47, 245, 235),
                                 ),
                                 onPressed: () {
                                   if (_key.currentState!.validate()) {
@@ -151,17 +138,21 @@ class _AddUserState extends State<AddUser> {
                                     final email = emailController.text;
                                     final phone = phoneController.text;
                                     final course = courseController.text;
-                                    Provider.of<StudentData>(context,listen: false).addData(name, age, email, phone, course,location.currentAddress);
+                                    Provider.of<StudentData>(context,
+                                            listen: false)
+                                        .addData(name, age, email, phone,
+                                            course, location.currentAddress);
                                     nameController.clear();
                                     ageController.clear();
                                     emailController.clear();
                                     phoneController.clear();
                                     courseController.clear();
-
                                   }
-                                   Navigator.pop(context);
-                                   location.clearCurrentAddress();
-                                   Provider.of<StudentData>(context ,listen: false).getData();
+                                  Navigator.pop(context);
+                                  location.clearCurrentAddress();
+                                  Provider.of<StudentData>(context,
+                                          listen: false)
+                                      .getData();
                                 },
                                 child: Text('Submit'),
                               ),
@@ -181,7 +172,3 @@ class _AddUserState extends State<AddUser> {
     );
   }
 }
-
-
-
-

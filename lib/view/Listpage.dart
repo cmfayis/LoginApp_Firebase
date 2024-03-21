@@ -7,19 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'add_user.dart';
 
-class ListPage extends StatefulWidget {
+class ListPage extends StatelessWidget {
   const ListPage({Key? key}) : super(key: key);
 
-  @override
-  _ListPageState createState() => _ListPageState();
-}
-
-class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 146, 227, 168),
+        backgroundColor: Color.fromARGB(255, 47, 245, 235),
         onPressed: () {
           Navigator.push(
             context,
@@ -31,98 +26,105 @@ class _ListPageState extends State<ListPage> {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage())));
-              },
-              icon: Icon(Icons.logout)),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
+            },
+            icon: Icon(Icons.logout),
+          ),
         ],
-        backgroundColor: const Color.fromARGB(255, 146, 227, 168),
-        title: const Text(
+        backgroundColor: const Color.fromARGB(255, 47, 245, 235),
+        title: Text(
           "Student Data",
-          style: TextStyle(color: Colors.white, fontSize: 35),
+          style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
       body: Container(
-        color: Color.fromARGB(255, 146, 227, 168),
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
-            child: Consumer<StudentData>(
-              builder: (BuildContext context, studentData, child) {
-                final data = studentData.getData();
-                return StreamBuilder(
-                  stream: data,
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      print('Error: ${snapshot.error}');
-                      return Text('Error occurred');
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-
-                    if (snapshot.data!.docs.isEmpty) {
-                      return Center(child: Text('No Data Found'));
-                    }
-
+          padding: const EdgeInsets.all(8.0),
+          child: Consumer<StudentData>(
+            builder: (context, studentData, child) {
+              final data = studentData.getData();
+              return StreamBuilder(
+                stream: data,
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (snapshot.data!.docs.isEmpty) {
+                    return Center(child: Text('No Data Found'));
+                  } else {
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final studentData = snapshot.data!.docs[index];
                         return Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10.0,
-                            left: 10.0,
-                            top: 5.0,
-                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Card(
-                            color: Color.fromARGB(255, 146, 227, 168),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/update',
-                                  arguments: {
-                                    'Name': studentData['Name'],
-                                    'Age': studentData['Age'],
-                                    'Email': studentData['Email'],
-                                    'Phone': studentData['Phone'],
-                                    'course': studentData['course'],
-                                    'location': studentData['location'],
-                                    'id': studentData.id,
+                            elevation: 4,
+                            shadowColor: Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: BorderSide(color: Colors.grey[200]!),
+                            ),
+                            color: Colors.blueGrey[
+                                50], // Use a subtle color like blueGrey[50]
+                            child: Container(
+                              height: 100,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              child: Center(
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/update',
+                                      arguments: {
+                                        'Name': studentData['Name'],
+                                        'Age': studentData['Age'],
+                                        'Email': studentData['Email'],
+                                        'Phone': studentData['Phone'],
+                                        'course': studentData['course'],
+                                        'location': studentData['location'],
+                                        'id': studentData.id,
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                              trailing: IconButton(
-                                onPressed: () {
-                                  Provider.of<StudentData>(context,
-                                          listen: false)
-                                      .delete(studentData.id);
-                                },
-                                icon: Icon(Icons.delete),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      Provider.of<StudentData>(context,
+                                              listen: false)
+                                          .delete(studentData.id);
+                                    },
+                                    icon: Icon(Icons.delete),
+                                  ),
+                                  title: Text(
+                                    studentData['Name'],
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    studentData['Email'],
+                                    style: TextStyle(
+                                        fontSize: 14, color: Colors.grey[600]),
+                                  ),
+                                ),
                               ),
-                              title: Text(
-                                studentData['Name'],
-                              ),
-                              subtitle: Text(studentData['Email']),
                             ),
                           ),
                         );
                       },
                     );
-                  },
-                );
-              },
-            ),
+                  }
+                },
+              );
+            },
           ),
         ),
       ),

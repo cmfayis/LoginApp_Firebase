@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAYgs8eNabcNq9_gCgMDMWd3A5w1BafDoE',
-    appId: '1:433452049538:web:2af4912fdcc0ca18d1c09b',
-    messagingSenderId: '433452049538',
-    projectId: 'mini3-16575',
-    authDomain: 'mini3-16575.firebaseapp.com',
-    storageBucket: 'mini3-16575.appspot.com',
-    measurementId: 'G-J8B41PL3KE',
+    apiKey: 'AIzaSyDknaWwUb9Q_qfkSU91IItPjvirvQSON_g',
+    appId: '1:818896003379:web:a77c3ce51afc639684de46',
+    messagingSenderId: '818896003379',
+    projectId: 'firbaseauth-10d05',
+    authDomain: 'firbaseauth-10d05.firebaseapp.com',
+    storageBucket: 'firbaseauth-10d05.appspot.com',
+    measurementId: 'G-5KRR370YKC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDKuAuEvie0S1m8bKcIVhoijYpijIQlHlQ',
-    appId: '1:433452049538:android:4762fc39d893b86ad1c09b',
-    messagingSenderId: '433452049538',
-    projectId: 'mini3-16575',
-    storageBucket: 'mini3-16575.appspot.com',
+    apiKey: 'AIzaSyDmZq472JjRNWILVly138DE5QOq3bVKaw0',
+    appId: '1:818896003379:android:0c824e02481af07784de46',
+    messagingSenderId: '818896003379',
+    projectId: 'firbaseauth-10d05',
+    storageBucket: 'firbaseauth-10d05.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC3SOZI0Fv_XWL8-Crlwiijki52aR4ibyU',
-    appId: '1:433452049538:ios:60d941abffce4704d1c09b',
-    messagingSenderId: '433452049538',
-    projectId: 'mini3-16575',
-    storageBucket: 'mini3-16575.appspot.com',
+    apiKey: 'AIzaSyDXiWqo2RsDb4BYBUCFfDtbIAPA8VFukKg',
+    appId: '1:818896003379:ios:a817550ef2f5d2fe84de46',
+    messagingSenderId: '818896003379',
+    projectId: 'firbaseauth-10d05',
+    storageBucket: 'firbaseauth-10d05.appspot.com',
     iosBundleId: 'com.example.firebaseApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC3SOZI0Fv_XWL8-Crlwiijki52aR4ibyU',
-    appId: '1:433452049538:ios:d5707a1297ee50c3d1c09b',
-    messagingSenderId: '433452049538',
-    projectId: 'mini3-16575',
-    storageBucket: 'mini3-16575.appspot.com',
+    apiKey: 'AIzaSyDXiWqo2RsDb4BYBUCFfDtbIAPA8VFukKg',
+    appId: '1:818896003379:ios:2fca52293354ee2984de46',
+    messagingSenderId: '818896003379',
+    projectId: 'firbaseauth-10d05',
+    storageBucket: 'firbaseauth-10d05.appspot.com',
     iosBundleId: 'com.example.firebaseApp.RunnerTests',
   );
 }
