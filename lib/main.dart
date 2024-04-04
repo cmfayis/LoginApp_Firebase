@@ -1,5 +1,6 @@
 import 'package:firebase_app/controller/db.dart';
 import 'package:firebase_app/controller/location.dart';
+import 'package:firebase_app/controller/profileprovider.dart';
 import 'package:firebase_app/firebase_options.dart';
 import 'package:firebase_app/view/HomePage.dart';
 import 'package:firebase_app/view/Listpage.dart';
@@ -15,7 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<ProfileProvider>(
+          create: (_) => ProfileProvider(),
+        ),
         ChangeNotifierProvider(create: (context) => StudentData()),
         ChangeNotifierProvider(create: (context) => LocationProvider()),
       ],
@@ -34,9 +38,9 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListPage();
+                return const ListPage();
               } else {
-                return HomePage();
+                return const HomePage();
               }
             }),
         routes: {

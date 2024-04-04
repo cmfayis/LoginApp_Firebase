@@ -1,8 +1,8 @@
 import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/SignUp.dart';
-import 'package:firebase_app/view/widgets/custom_textfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> formkey = GlobalKey<FormState>();
@@ -10,244 +10,133 @@ class LoginPage extends StatelessWidget {
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
 
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            colors: [
-              Color.fromARGB(255, 123, 198, 233),
-              Color.fromARGB(255, 47, 245, 235),
-              Colors.white,
-            ],
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(
-              height: 80,
-            ),
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    "Login",
-                    style: TextStyle(color: Colors.white, fontSize: 40),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Welcome Back",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formkey,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60),
+      body: SingleChildScrollView(
+        child: Form(
+          key: formkey,
+          child: Padding(
+            padding: const EdgeInsets.all(18.10),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 50,
+                ),
+                Image.asset(
+                  'assets/images/signin.png',
+                  height: 300,
+                  width: 300,
+                ),
+                const Text(
+                  'Welcome Back!',
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 22.0,
+                ),
+                TextFormField(
+                  controller: emailcontroller,
+                  decoration: InputDecoration(
+                      hintText: ' Enter Your Email',
+                      labelText: " Email",
+                      prefixIcon: const Icon(
+                        Icons.email_rounded,
+                        color: Colors.black,
                       ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormField(
+                  controller: passwordcontroller,
+                  decoration: InputDecoration(
+                      hintText: 'Enter Your Password',
+                      labelText: "Password",
+                      prefixIcon: const Icon(
+                        Icons.lock,
+                        color: Colors.black,
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20))),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Signup()));
+                    },
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "'Don't have an account?",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "SignUp",
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ],
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(30),
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: 60,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10),
-                                )
-                              ],
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Colors.grey.shade200,
-                                      ),
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: emailcontroller,
-                                    decoration: const InputDecoration(
-                                      hintText: "Email or Phone number",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                    ),
-                                    validator: emailValidate,
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Colors.grey.shade200,
-                                      ),
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    controller: passwordcontroller,
-                                    obscureText: true,
-                                    decoration: const InputDecoration(
-                                      hintText: "Password",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
-                                    ),
-                                    // validator: passwordValidate,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SignUpPage()));
-                              // Handle sign up button click
-                              // You can navigate to a sign-up page here
-                            },
-                            child: Text(
-                              'Already I have a account',
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 23,
-                          ),
-                          MaterialButton(
-                            onPressed: () async {
-                              try {
-                                UserCredential userCredential =
-                                    await _auth.signInWithEmailAndPassword(
-                                  email: emailcontroller.text,
-                                  password: passwordcontroller.text,
-                                );
+                  ),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                MaterialButton(
+                  onPressed: () async {
+                    try {
+                      UserCredential userCredential =
+                          await _auth.signInWithEmailAndPassword(
+                        email: emailcontroller.text,
+                        password: passwordcontroller.text,
+                      );
 
-                                Navigator.pushAndRemoveUntil(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return const ListPage();
-                                }), (routes) => false);
+                      Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const ListPage();
+                      }), (routes) => false);
 
-                                print(
-                                    'User signed in: ${userCredential.user!.email}');
-                              } catch (e) {
-                                print('Error signing in: $e');
-                              }
-                            },
-                            height: 50,
-                            color: Color.fromARGB(255, 47, 245, 235),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            "Continue with social media",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    // Handle Facebook login
-                                  },
-                                  height: 50,
-                                  color: Colors.blue,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Facebook",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Expanded(
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    // Handle Google login
-                                  },
-                                  height: 50,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  color: Colors.red,
-                                  child: Center(
-                                    child: Text(
-                                      "Google",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                      // print('User signed in: ${userCredential.user!.email}');
+                    } catch (e) {
+                      print('Error signing in: $e');
+                    }
+                  },
+                  height: 50,
+                  color: const Color.fromARGB(255, 215, 213, 213),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+                const Text(
+                  "...",
+                  style: TextStyle(fontSize: 50, color: Colors.black),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

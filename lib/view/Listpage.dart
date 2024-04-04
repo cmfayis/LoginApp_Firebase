@@ -1,6 +1,4 @@
 import 'package:firebase_app/controller/db.dart';
-import 'package:firebase_app/view/HomePage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +12,6 @@ class ListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color.fromARGB(255, 47, 245, 235),
         onPressed: () {
           Navigator.push(
             context,
@@ -22,26 +19,6 @@ class ListPage extends StatelessWidget {
           );
         },
         child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => HomePage()),
-              );
-            },
-            icon: Icon(Icons.logout),
-          ),
-        ],
-        backgroundColor: const Color.fromARGB(255, 47, 245, 235),
-        title: Text(
-          "Student Data",
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        centerTitle: true,
       ),
       body: Container(
         child: Padding(
@@ -53,11 +30,11 @@ class ListPage extends StatelessWidget {
                 stream: data,
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.data!.docs.isEmpty) {
-                    return Center(child: Text('No Data Found'));
+                    return const Center(child: Text('No Data Found'));
                   } else {
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
@@ -76,7 +53,7 @@ class ListPage extends StatelessWidget {
                                 50], // Use a subtle color like blueGrey[50]
                             child: Container(
                               height: 100,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
                               child: Center(
                                 child: ListTile(
@@ -101,11 +78,11 @@ class ListPage extends StatelessWidget {
                                               listen: false)
                                           .delete(studentData.id);
                                     },
-                                    icon: Icon(Icons.delete),
+                                    icon: const Icon(Icons.delete),
                                   ),
                                   title: Text(
                                     studentData['Name'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),

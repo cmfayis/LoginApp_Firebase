@@ -1,243 +1,183 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_app/controller/profileprovider.dart';
-import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/loginpage.dart';
-import 'package:firebase_app/view/widgets/custom_textfield.dart';
 import 'package:firebase_app/view/widgets/mainpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class SignUpWrapper extends StatelessWidget {
-  const SignUpWrapper({super.key});
+class Signup extends StatefulWidget {
+  const Signup({super.key,});
 
   @override
-  Widget build(BuildContext context) {
-    return const SignUpPage();
-  }
+  State<Signup> createState() => _SignupState();
 }
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
-
-  @override
-  State<SignUpPage> createState() => _SignUpPageState();
-}
-
-class _SignUpPageState extends State<SignUpPage> {
-  final formkey = GlobalKey<FormState>();
-  final namecontroller1 = TextEditingController();
-  final namecontroller = TextEditingController();
-  final emailcontroller = TextEditingController();
-  final passwordcontroller = TextEditingController();
-  final phonecontoller = TextEditingController();
+class _SignupState extends State<Signup> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color.fromARGB(255, 203, 192, 192),),
-      body: Form(
-        key: formkey,
-        child: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color.fromARGB(255, 203, 192, 192),
-                Color.fromARGB(255, 25, 25, 25),
-              ],
-            ),
-          ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const SizedBox(
-                height: 30,
+              const SizedBox(height: 30),
+              Image.asset(
+                'assets/images/signin.png',
+                height: 250,
+                width: 300,
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 1000),
-                      child: const Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 45,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 1300),
-                      child: const Text(
-                        "Create an Account!",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ],
+              const Text(
+                'Create An Account',
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 22.0),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Name',
+                  labelText: 'Username',
+                  prefixIcon: const Icon(
+                    Icons.person_rounded,
+                    color: Colors.black,
+                  ),
+                  contentPadding: const EdgeInsets.all(7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
               ),
-              // const SizedBox(height: 10),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(35)
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        children: <Widget>[
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          FadeInUp(
-                            duration: const Duration(milliseconds: 1400),
-                            child: Column(
-                              children: <Widget>[
-                                CustomTextFormField(
-                                  controller: namecontroller,
-                                  labelText: 'First Name',
-                                  hintText: 'First Name',
-                                  validator: nameValidate,
-                                  icons: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 20,),
-                                CustomTextFormField(
-                                  controller: emailcontroller,
-                                  labelText: 'Email',
-                                  hintText: 'Email',
-                                  validator: nameValidate,
-                                  icons: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 20,),
-                                CustomTextFormField(
-                                  controller: passwordcontroller,
-                                  labelText: 'Password',
-                                  hintText: 'Password ',
-                                  validator: nameValidate,
-                                  icons: const Icon(Icons.person),
-                                ),
-                                SizedBox(height: 20,),
-                                CustomTextFormField(
-                                  controller: phonecontoller,
-                                  labelText: 'Phone',
-                                  hintText: 'Phone',
-                                  validator: nameValidate,
-                                  icons: const Icon(Icons.person),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          FadeInUp(
-                            duration: const Duration(milliseconds: 1500),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text('Existing account ? ',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    )),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Log in',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 23,
-                          ),
-                          FadeInUp(
-                            duration: const Duration(milliseconds: 1600),
-                            child: MaterialButton(
-                              onPressed: () async {
-                                try {
-
-                                  UserCredential userCredential =
-                                      await _auth.createUserWithEmailAndPassword(
-                                    email: emailcontroller.text,
-                                    password: passwordcontroller.text,
-                                  );
-                                  FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(userCredential.user!.uid)
-                                      .set({
-                                    'name': namecontroller.text,
-                                    "email": emailcontroller.text,
-                                  });
-                                  Provider.of<ProfileProvider>(context,
-                                          listen: false)
-                                      .getUserData();
-
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MainPage(),
-                                    ),
-                                    (routes) => false,
-                                  );
-
-                                  print(
-                                      'User created: ${userCredential.user!.email}');
-                                } catch (e) {
-                                  print('Error creating user: $e');
-                                }
-                              },
-                              height: 50,
-                              color: Colors.black,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "SignUp",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+              const SizedBox(height: 7),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Email',
+                  labelText: 'Email',
+                  prefixIcon: const Icon(
+                    Icons.email_rounded,
+                    color: Colors.black,
+                  ),
+                  contentPadding: const EdgeInsets.all(7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 7),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Password',
+                  labelText: 'Password',
+                  prefixIcon: const Icon(
+                    Icons.lock_rounded,
+                    color: Colors.black,
+                  ),
+                  contentPadding: const EdgeInsets.all(7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 7),
+              TextFormField(
+                controller: _phoneController,
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Phone',
+                  labelText: 'Phone',
+                  prefixIcon: const Icon(
+                    Icons.phone_rounded,
+                    color: Colors.black,
+                  ),
+                  contentPadding: const EdgeInsets.all(7),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Already have an account',
+                        style: TextStyle(color: Colors.grey),
                       ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Signin',
+                        style: TextStyle(color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 15),
+              MaterialButton(
+                onPressed: () async {
+                  try {
+                    UserCredential userCredential =
+                        await _auth.createUserWithEmailAndPassword(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text,
+                    );
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(userCredential.user!.uid)
+                        .set({
+                      'name': _nameController.text.trim(),
+                      'email': _emailController.text.trim(),
+                    });
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .getUserData();
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MainPage()),
+                      (route) => false,
+                    );
+
+                    print('User created: ${userCredential.user!.email}');
+                  } catch (e) {
+                    print('Error creating user: $e');
+                  }
+                },
+                height: 50,
+                color: const Color.fromARGB(255, 215, 213, 213),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
-              )
+              ),
+              const SizedBox(height: 50),
             ],
           ),
         ),
