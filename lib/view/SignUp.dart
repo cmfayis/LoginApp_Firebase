@@ -1,25 +1,33 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_app/controller/profileprovider.dart';
 import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/loginpage.dart';
+import 'package:firebase_app/view/widgets/custom_textfield.dart';
+import 'package:firebase_app/view/widgets/mainpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpWrapper extends StatelessWidget {
   const SignUpWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SignUpPage();
+    return const SignUpPage();
   }
 }
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
   final formkey = GlobalKey<FormState>();
+  final namecontroller1 = TextEditingController();
   final namecontroller = TextEditingController();
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
@@ -29,252 +37,201 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 203, 192, 192),),
       body: Form(
         key: formkey,
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Color.fromARGB(255, 123, 198, 233),
-            Color.fromARGB(255, 47, 245, 235),
-            Colors.white
-          ])),
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 203, 192, 192),
+                Color.fromARGB(255, 25, 25, 25),
+              ],
+            ),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              SizedBox(
-                height: 100,
+              const SizedBox(
+                height: 30,
               ),
               Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     FadeInUp(
-                        duration: Duration(milliseconds: 1000),
-                        child: Text(
-                          "Sign up",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        )),
-                    SizedBox(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 45,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
                       height: 10,
                     ),
                     FadeInUp(
-                        duration: Duration(milliseconds: 1300),
-                        child: Text(
-                          "Welcome Back",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        )),
+                      duration: const Duration(milliseconds: 1300),
+                      child: const Text(
+                        "Create an Account!",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              // const SizedBox(height: 10),
               Expanded(
                 child: SingleChildScrollView(
                   child: Container(
+
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(60),
-                            topRight: Radius.circular(60))),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(35)
+                    ),
                     child: Padding(
-                      padding: EdgeInsets.all(30),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         children: <Widget>[
-                          SizedBox(
-                            height: 60,
+                          const SizedBox(
+                            height: 40,
                           ),
                           FadeInUp(
-                              duration: Duration(milliseconds: 1400),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color.fromRGBO(
-                                                  219, 157, 124, 0.29),
-                                              blurRadius: 8,
-                                              offset: Offset(0, 5))
-                                        ],
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: namecontroller,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          hintText: "Name",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color.fromRGBO(
-                                                  219, 157, 124, 0.29),
-                                              blurRadius: 8,
-                                              offset: Offset(0, 5))
-                                        ],
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: emailcontroller,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          hintText: "Email ",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color.fromRGBO(
-                                                  218, 171, 146, 0.298),
-                                              blurRadius: 8,
-                                              offset: Offset(0, 5))
-                                        ],
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: passwordcontroller,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          hintText: "Password",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                              color: Color.fromRGBO(
-                                                  218, 171, 146, 0.298),
-                                              blurRadius: 8,
-                                              offset: Offset(0, 5))
-                                        ],
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: phonecontoller,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                      decoration: const InputDecoration(
-                                          hintText: "Phone number",
-                                          contentPadding: EdgeInsets.only(
-                                            left: 10,
-                                          ),
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                ],
-                              )),
-                          SizedBox(
+                            duration: const Duration(milliseconds: 1400),
+                            child: Column(
+                              children: <Widget>[
+                                CustomTextFormField(
+                                  controller: namecontroller,
+                                  labelText: 'First Name',
+                                  hintText: 'First Name',
+                                  validator: nameValidate,
+                                  icons: const Icon(Icons.person),
+                                ),
+                                SizedBox(height: 20,),
+                                CustomTextFormField(
+                                  controller: emailcontroller,
+                                  labelText: 'Email',
+                                  hintText: 'Email',
+                                  validator: nameValidate,
+                                  icons: const Icon(Icons.person),
+                                ),
+                                SizedBox(height: 20,),
+                                CustomTextFormField(
+                                  controller: passwordcontroller,
+                                  labelText: 'Password',
+                                  hintText: 'Password ',
+                                  validator: nameValidate,
+                                  icons: const Icon(Icons.person),
+                                ),
+                                SizedBox(height: 20,),
+                                CustomTextFormField(
+                                  controller: phonecontoller,
+                                  labelText: 'Phone',
+                                  hintText: 'Phone',
+                                  validator: nameValidate,
+                                  icons: const Icon(Icons.person),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
                             height: 30,
                           ),
                           FadeInUp(
-                              duration: Duration(milliseconds: 1500),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text('Existing account ? ',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                      )),
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()));
-                                      },
-                                      child: const Text(
-                                        'Log in',
-                                        style: TextStyle(color: Colors.black),
-                                      )),
-                                ],
-                              )),
-                          SizedBox(
+                            duration: const Duration(milliseconds: 1500),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text('Existing account ? ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    )),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Log in',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
                             height: 23,
                           ),
                           FadeInUp(
-                              duration: Duration(milliseconds: 1600),
-                              child: MaterialButton(
-                                onPressed: () async {
-                                  try {
-                                    UserCredential userCredential = await _auth
-                                        .createUserWithEmailAndPassword(
-                                      email: emailcontroller.text,
-                                      password: passwordcontroller.text,
-                                    );
+                            duration: const Duration(milliseconds: 1600),
+                            child: MaterialButton(
+                              onPressed: () async {
+                                try {
 
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ListPage()),
-                                        (routes) => false);
+                                  UserCredential userCredential =
+                                      await _auth.createUserWithEmailAndPassword(
+                                    email: emailcontroller.text,
+                                    password: passwordcontroller.text,
+                                  );
+                                  FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(userCredential.user!.uid)
+                                      .set({
+                                    'name': namecontroller.text,
+                                    "email": emailcontroller.text,
+                                  });
+                                  Provider.of<ProfileProvider>(context,
+                                          listen: false)
+                                      .getUserData();
 
-                                    print(
-                                        'User created: ${userCredential.user!.email}');
-                                  } catch (e) {
-                                    print('Error creating user: $e');
-                                  }
-                                },
-                                height: 50,
-                                color: Color.fromARGB(255, 47, 245, 235),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MainPage(),
+                                    ),
+                                    (routes) => false,
+                                  );
+
+                                  print(
+                                      'User created: ${userCredential.user!.email}');
+                                } catch (e) {
+                                  print('Error creating user: $e');
+                                }
+                              },
+                              height: 50,
+                              color: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "SignUp",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    "SignUp",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
