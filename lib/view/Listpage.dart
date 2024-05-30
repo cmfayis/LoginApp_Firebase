@@ -11,7 +11,17 @@ class ListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 90,
+        backgroundColor: const Color.fromARGB(255, 134, 230, 163),
+        title: const Text(
+          'Taskify',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 215, 213, 213),
         onPressed: () {
           Navigator.push(
             context,
@@ -43,14 +53,14 @@ class ListPage extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Card(
+                            color: const Color.fromARGB(255, 215, 213, 213),
                             elevation: 4,
                             shadowColor: Colors.grey,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                               side: BorderSide(color: Colors.grey[200]!),
                             ),
-                            color: Colors.blueGrey[
-                                50], // Use a subtle color like blueGrey[50]
+                            // Use a subtle color like blueGrey[50]
                             child: Container(
                               height: 100,
                               padding: const EdgeInsets.symmetric(

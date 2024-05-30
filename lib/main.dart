@@ -5,6 +5,7 @@ import 'package:firebase_app/firebase_options.dart';
 import 'package:firebase_app/view/HomePage.dart';
 import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/update.dart';
+import 'package:firebase_app/view/widgets/mainpage.dart';
 import 'package:firebase_app/view/widgets/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const ListPage();
+                return const MainPage();
               } else {
                 return const HomePage();
               }

@@ -18,7 +18,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onTap,
       backgroundColor: const Color.fromARGB(
-          255, 133, 95, 93), // Set the background color to transparent
+          255, 134, 230, 163), // Set the background color to transparent
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.list),

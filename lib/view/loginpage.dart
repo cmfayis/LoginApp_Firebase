@@ -1,5 +1,6 @@
 import 'package:firebase_app/view/Listpage.dart';
 import 'package:firebase_app/view/SignUp.dart';
+import 'package:firebase_app/view/widgets/mainpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -15,6 +16,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(),
       body: SingleChildScrollView(
         child: Form(
           key: formkey,
@@ -23,19 +25,22 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 const SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 Image.asset(
                   'assets/images/signin.png',
                   height: 300,
                   width: 300,
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Text(
                   'Welcome Back!',
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
-                  height: 22.0,
+                  height: 30.0,
                 ),
                 TextFormField(
                   controller: emailcontroller,
@@ -50,7 +55,7 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20))),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 20,
                 ),
                 TextFormField(
                   controller: passwordcontroller,
@@ -65,14 +70,16 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20))),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Align(
                   alignment: Alignment.topRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Signup()));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Signup()));
                     },
                     child: const Row(
                       mainAxisSize: MainAxisSize.min,
@@ -106,10 +113,8 @@ class LoginPage extends StatelessWidget {
 
                       Navigator.pushAndRemoveUntil(context,
                           MaterialPageRoute(builder: (context) {
-                        return const ListPage();
+                        return const MainPage();
                       }), (routes) => false);
-
-                      // print('User signed in: ${userCredential.user!.email}');
                     } catch (e) {
                       print('Error signing in: $e');
                     }
@@ -130,10 +135,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Text(
-                  "...",
-                  style: TextStyle(fontSize: 50, color: Colors.black),
-                )
+
               ],
             ),
           ),

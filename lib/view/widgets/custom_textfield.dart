@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CustomTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
@@ -10,7 +9,8 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxlength;
   final Icon icons;
 
-  CustomTextFormField({
+  const CustomTextFormField({
+    super.key,
     required this.controller,
     required this.labelText,
     required this.hintText,
@@ -28,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        border: OutlineInputBorder(),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         prefixIcon: icons,
       ),
       validator: validator,
@@ -36,8 +36,7 @@ class CustomTextFormField extends StatelessWidget {
   }
 }
 
-
-  String? idValidate(String? value) {
+String? idValidate(String? value) {
   if (value == null || value.isEmpty) {
     return 'This field is required';
   }
@@ -71,7 +70,8 @@ String? emailValidate(String? value) {
   if (value == null || value.isEmpty) {
     return 'This field is required';
   }
-  if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$').hasMatch(value)) {
+  if (!RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$')
+      .hasMatch(value)) {
     return 'Invalid Email format';
   }
   return null;
@@ -86,4 +86,3 @@ String? phoneValidate(String? value) {
   }
   return null;
 }
-

@@ -53,38 +53,44 @@ class HomePage extends StatelessWidget {
               ),
               Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
-                    },
-                    child: Container(
-                      width: 135,
-                      height: 50,
-                      decoration: BoxDecoration(
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
                           color: Colors.grey,
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.black)),
-                      child: const Center(child: Text('Login')),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: const Center(child: Text('Login')),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 10,
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  Signup()));
-                    },
-                    child: Container(
-                      width: 135,
-                      height: 50,
-                      decoration: BoxDecoration(
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Signup()));
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.black)),
-                      child: const Center(child: Text('Signup')),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: const Center(child: Text('Signup')),
+                      ),
                     ),
                   ),
                 ],
@@ -125,39 +131,41 @@ class HomePage extends StatelessWidget {
                 height: 25,
               ),
               Container(
-                  width: double.infinity,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 215, 213, 213),
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black)),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Image.asset(
-                        "assets/images/ggg.png",
-                        height: 40,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        height: 50,
-                        width: 1,
-                        color: Colors.black,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Text(
-                        "Continue with Google",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  )),
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 215, 213, 213),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black),
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Image.asset(
+                      "assets/images/ggg.png",
+                      height: 40,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      height: 50,
+                      width: 1,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Text(
+                      "Continue with Google",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                    )
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 30,
               ),

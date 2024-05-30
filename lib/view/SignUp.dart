@@ -50,13 +50,13 @@ class _SignupState extends State<Signup> {
                     Icons.person_rounded,
                     color: Colors.black,
                   ),
-                  contentPadding: const EdgeInsets.all(7),
+                  // contentPadding: const EdgeInsets.all(7),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -66,13 +66,13 @@ class _SignupState extends State<Signup> {
                     Icons.email_rounded,
                     color: Colors.black,
                   ),
-                  contentPadding: const EdgeInsets.all(7),
+
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
@@ -83,13 +83,13 @@ class _SignupState extends State<Signup> {
                     Icons.lock_rounded,
                     color: Colors.black,
                   ),
-                  contentPadding: const EdgeInsets.all(7),
+                  // contentPadding: const EdgeInsets.all(7),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
-              const SizedBox(height: 7),
+              const SizedBox(height: 10),
               TextFormField(
                 controller: _phoneController,
                 decoration: InputDecoration(
@@ -99,7 +99,7 @@ class _SignupState extends State<Signup> {
                     Icons.phone_rounded,
                     color: Colors.black,
                   ),
-                  contentPadding: const EdgeInsets.all(7),
+                  // contentPadding: const EdgeInsets.all(7),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),

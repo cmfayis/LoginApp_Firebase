@@ -24,14 +24,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text(
-            'Studify',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-        ),
+
         body: _pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBarWidget(
           currentIndex: _currentIndex,

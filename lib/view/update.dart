@@ -62,7 +62,7 @@ class _updateState extends State<update> {
                 child: Column(
                   children: [
                     const Text(
-                      'Add Student',
+                      'Update',
                       style: TextStyle(fontSize: 35),
                     ),
                     const SizedBox(
